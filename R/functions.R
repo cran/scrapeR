@@ -79,7 +79,9 @@ sliceIt<-function(vec,x) {
 # =================
 # PRIMARY FUNCTIONS
 # =================
-scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,userAgent=unlist(options("HTTPUserAgent")),follow=FALSE,headers=TRUE,parse=TRUE,isXML=FALSE,verbose=FALSE) {
+scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
+	userAgent=unlist(options("HTTPUserAgent")),follow=FALSE,headers=TRUE,
+	parse=TRUE,isXML=FALSE,verbose=FALSE) {
 	
 	# Require libraries
 	require(XML)

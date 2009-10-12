@@ -2,10 +2,11 @@
 \Rdversion{1.1}
 \alias{scrape}
 \title{A Tool For Scraping and Parsing HTML and XML Documents From the Web}
-\description{This function assists the user with retrieving HTML or XML files, parsing their contents, and diagnosing potential errors that may have occurred along the way.}
+\description{This function assists the user with retrieving HTML and XML files, parsing their contents, and diagnosing potential errors that may have occurred along the way.}
 \usage{
-scrape(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,userAgent=unlist(options("HTTPUserAgent")),
-	follow=FALSE,headers=TRUE,parse=TRUE,isXML=FALSE,verbose=FALSE)
+scrape(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
+	userAgent=unlist(options("HTTPUserAgent")),follow=FALSE,
+	headers=TRUE,parse=TRUE,isXML=FALSE,verbose=FALSE)
 }
 \arguments{
   \item{url }{a vector of URLs, each as a character string.  Either the \code{url}, \code{object}, or the \code{file} parameter must be provided.}
@@ -38,7 +39,7 @@ Information about User-Agent headers: \url{http://www.w3.org/Protocols/rfc2616/r
 	
 Information about the \code{XPath} language: \url{http://www.w3schools.com/XPath/default.asp}.
 }
-\author{Ryan M. Acton <racton@uci.edu>}
+\author{Ryan M. Acton <racton@uci.edu> \url{http://www.ryanacton.com}}
 \examples{
 \dontrun{
 ## Example 1.  Getting all of the package names available for download
@@ -46,10 +47,12 @@ Information about the \code{XPath} language: \url{http://www.w3schools.com/XPath
 
 # First, pull in the page's source code, check for (and follow) a page redirection, 
 # and retrieve the headers before deciding to parse the code.
-pageSource<-scrape(url="http://cran.r-project.org/web/packages/",headers=TRUE,parse=FALSE)
+pageSource<-scrape(url="http://cran.r-project.org/web/packages/",headers=TRUE,
+	parse=FALSE)
 
-# Second, inspect the headers to ensure a status code of 200, which means the page was served properly.
-#	If okay, then parse the object into an XML tree and retrieve all of the package names.
+# Second, inspect the headers to ensure a status code of 200, which means the page
+# was served properly.  If okay, then parse the object into an XML tree and retrieve
+# all of the package names.
 if(attributes(pageSource)$headers["statusCode"]==200) {
 	page<-scrape(object="pageSource")
 	xpathSApply(page,"//table//td/a",xmlValue)
@@ -68,8 +71,9 @@ mmmCookies<-scrape(file=fileToLoad,isXML=TRUE)
 xpathSApply(mmmCookies,"//recipe/ingredient[@type='dry']/item",xmlValue)
 
 # Next, remind myself how much flour is needed
-paste(xpathSApply(mmmCookies,"//item[.='flour']/preceding-sibling::amount",xmlValue),
-xpathSApply(mmmCookies,"//item[.='flour']/preceding-sibling::unit",xmlValue))
+paste(xpathSApply(mmmCookies,"//item[.='flour']/preceding-sibling::amount",
+	xmlValue),xpathSApply(mmmCookies,"//item[.='flour']/
+	preceding-sibling::unit",xmlValue))
 
 # Finally, remind myself who the author of this recipe is
 xpathSApply(mmmCookies,"//recipe",xmlGetAttr,"from")
