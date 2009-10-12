@@ -54,8 +54,13 @@ urlRedirects<-function(headers) {
 }
 
 # A function to strip headers from HTML/XML source code
-stripHeaders<-function(source) {
-	startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source,useBytes=T)
+stripHeaders<-function(source,.encoding) {
+	if(identical(.encoding,integer())) {
+		startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source)
+	} else {
+		startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source,useBytes=T)
+	}
+	
 	start<-unlist(lapply(startStopPositions,attr,which="match.length"))
 	end<-sapply(source,nchar)
 	mapply(substr,x=source,start=start,stop=end)
@@ -173,7 +178,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 			# Update the source code, header, and URL redirect lists
 			hdrs<-headerParse(sourceCode)
 			redirectURL<-urlRedirects(hdrs)
-			sourceCode<-stripHeaders(sourceCode)
+			sourceCode<-stripHeaders(sourceCode,.encoding)
 
 		} else if(!follow && headers) {	# follow==F and headers==T
 			for(i in 1:length(chunks)) {	# for each chunk...
@@ -205,7 +210,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 			
 			# Update the source code, and header lists
 			hdrs<-headerParse(sourceCode)
-			sourceCode<-stripHeaders(sourceCode)
+			sourceCode<-stripHeaders(sourceCode,.encoding)
 			
 		} else if(follow && !headers) {	# follow==T and headers==F
 			# First, build a temporary headers holder, since it's ultimately going to be discarded
@@ -240,7 +245,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 			# Update the source code, temporary headers, and URL redirect lists
 			hdrsTemp<-headerParse(sourceCode)
 			redirectURL<-urlRedirects(hdrsTemp)
-			sourceCode<-stripHeaders(sourceCode)
+			sourceCode<-stripHeaders(sourceCode,.encoding)
 			rm(hdrsTemp)	# Nix the temporary headers holder
 		} else if(!follow && !headers){	# follow==F and headers==F
 			for(i in 1:length(chunks)) {	# for each chunk...
