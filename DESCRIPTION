@@ -1,7 +1,7 @@
 Package: scrapeR
 Type: Package
 Title: Tools for Scraping Data from HTML and XML Documents
-Version: 0.1.4
+Version: 0.1.5
 Date: 2009-10-12
 Author: Ryan M. Acton <rmacton@gmail.com>
 Maintainer: Ryan M. Acton <rmacton@gmail.com>
@@ -10,6 +10,6 @@ Description: Tools for Scraping Data from Web-Based Documents
 License: GPL (>= 2)
 URL: http://www.ryanacton.com
 LazyLoad: yes
-Packaged: 2010-01-22 00:47:42 UTC; ryan
+Packaged: 2010-01-25 05:10:09 UTC; ryan
 Repository: CRAN
-Date/Publication: 2010-01-22 12:43:17
+Date/Publication: 2010-01-25 07:49:14

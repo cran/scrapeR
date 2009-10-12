@@ -283,7 +283,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				discard<-capture.output(returnThis<-sapply(sourceCode,htmlParse,asText=TRUE))
 			}
 		} else {
-			returnThis<-sourceCode
+			returnThis<-as.list(sourceCode)
 		}
 		rm(sourceCode)
 	}
