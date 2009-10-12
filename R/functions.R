@@ -283,7 +283,9 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				discard<-capture.output(returnThis<-sapply(sourceCode,htmlParse,asText=TRUE))
 			}
 		} else {
-			returnThis<-as.list(sourceCode)
+			if(!is.list(sourceCode)) {
+				returnThis<-as.list(sourceCode)
+			}
 		}
 		rm(sourceCode)
 	}
@@ -330,20 +332,11 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 		}
 	}
 	
-	# If returning something of size 1, just return it
-	if(length(returnThis)==1 && is.list(returnThis)) {
-		returnThis<-returnThis[[1]]		
-	}
-	
 	# If there are headers to work with, then attach them as attributes to the return value
 	if(any(!sapply(hdrs,is.null))) {
 		these<-which(!sapply(hdrs,is.null))
-		if(length(these)==1) {
-			attr(returnThis,which="headers")<-hdrs[[1]]
-		} else {
-			for(i in these) {
-				attr(returnThis[[i]],which="headers")<-hdrs[[i]]
-			}
+		for(i in these) {
+			attr(returnThis[[i]],which="headers")<-hdrs[[i]]
 		}
 	}
 	

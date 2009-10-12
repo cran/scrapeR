@@ -24,7 +24,7 @@ scrape(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
   \item{verbose }{logical; shall the function print extra information to the console?  The default value for this parameter is \code{FALSE}.}
 }
 \value{
-If \code{url} or \code{file} is supplied, then either the raw source code of the \code{url}s (\code{file}s) is returned as a list of (potentially long) character vectors (when \code{parse==FALSE}), or a list of \code{R}-friendly tree-like structures of the documents is returned (when \code{parse==TRUE}).  If \code{object} is supplied, then either the raw source code contained within the object is returned as a (potentially long) character string (when \code{parse==FALSE}), or an \code{R}-friendly tree-like structure of the document is returned (when \code{parse==TRUE}).  If \code{url} or \code{object} are supplied, the resulting object may have the following attributes:
+If \code{url} or \code{file} is supplied, then either the raw source code of the \code{url}s (\code{file}s) is returned as a list of (potentially long) character vectors (when \code{parse==FALSE}), or a list of \code{R}-friendly tree-like structures of the documents is returned (when \code{parse==TRUE}).  If \code{object} is supplied, then either the raw source code contained within the object is returned as a list object of (potentially long) character strings (when \code{parse==FALSE}), or a list object of \code{R}-friendly tree-like structures for the documents is returned (when \code{parse==TRUE}).  If \code{url} or \code{object} are supplied, the resulting object may have the following attributes:
 
 \item{redirect.URL }{the destination URLs that resulted from a series of redirects, if they occurred; else \code{NA}.  This is only returned if \code{follow==TRUE}.}
 
@@ -70,13 +70,13 @@ fileToLoad<-system.file("recipe.xml",package="scrapeR")
 mmmCookies<-scrape(file=fileToLoad,isXML=TRUE)
 
 # Next, retrieve the names of the dry ingredients that I'll need to buy
-xpathSApply(mmmCookies,"//recipe/ingredient[@type='dry']/item",xmlValue)
+xpathSApply(mmmCookies[[1]],"//recipe/ingredient[@type='dry']/item",xmlValue)
 
 # Next, remind myself how much flour is needed
-paste(xpathSApply(mmmCookies,"//item[.='flour']/preceding-sibling::amount",
-	xmlValue),xpathSApply(mmmCookies,"//item[.='flour']/
+paste(xpathSApply(mmmCookies[[1]],"//item[.='flour']/preceding-sibling::amount",
+	xmlValue),xpathSApply(mmmCookies[[1]],"//item[.='flour']/
 	preceding-sibling::unit",xmlValue))
 
 # Finally, remind myself who the author of this recipe is
-xpathSApply(mmmCookies,"//recipe",xmlGetAttr,"from")
+xpathSApply(mmmCookies[[1]],"//recipe",xmlGetAttr,"from")
 }
