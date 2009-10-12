@@ -6,7 +6,8 @@
 \usage{
 scrape(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 	userAgent=unlist(options("HTTPUserAgent")),follow=FALSE,
-	headers=TRUE,parse=TRUE,isXML=FALSE,verbose=FALSE)
+	headers=TRUE,parse=TRUE,isXML=FALSE,.encoding=integer(),
+	verbose=FALSE)
 }
 \arguments{
   \item{url }{a vector of URLs, each as a character string.  Either the \code{url}, \code{object}, or the \code{file} parameter must be provided.}
@@ -19,6 +20,7 @@ scrape(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
   \item{headers }{logical; should these HTTP requests retrieve the resulting HTTP headers?  This parameter is only meaningful if the \code{url} parameter is supplied.  The default value for this parameter is \code{FALSE}.}
   \item{parse }{logical, should the \code{url} or \code{file} vectors be parsed into \code{R}-friendly tree-like structures?  See \code{\link[XML]{xmlTreeParse}} for more information about this feature and how the object is returned.  If \code{parse==TRUE}, this tree-like structure is easily navigable using the \code{XPath} language (see the corresponding url reference provided below and the help page for \code{\link[=getNodeSet]{xpathSApply}}).  The default value for this parameter is \code{TRUE}.}
   \item{isXML }{logical; do the \code{url} or \code{file} vectors point to well-formed XML files?  See \code{\link[XML]{xmlTreeParse}} for the differences between parsing XML and HTML documents.  The default value for this parameter is \code{FALSE}.}
+  \item{.encoding }{integer or a string; identifies the encoding of the retrieved content.  See  \code{\link[RCurl]{getURL}} for more information.}
   \item{verbose }{logical; shall the function print extra information to the console?  The default value for this parameter is \code{FALSE}.}
 }
 \value{

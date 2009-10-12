@@ -55,7 +55,7 @@ urlRedirects<-function(headers) {
 
 # A function to strip headers from HTML/XML source code
 stripHeaders<-function(source) {
-	startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source)
+	startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source,useBytes=T)
 	start<-unlist(lapply(startStopPositions,attr,which="match.length"))
 	end<-sapply(source,nchar)
 	mapply(substr,x=source,start=start,stop=end)
@@ -81,7 +81,7 @@ sliceIt<-function(vec,x) {
 # =================
 scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 	userAgent=unlist(options("HTTPUserAgent")),follow=FALSE,headers=TRUE,
-	parse=TRUE,isXML=FALSE,verbose=FALSE) {
+	parse=TRUE,isXML=FALSE,.encoding=integer(),verbose=FALSE) {
 	
 	# Require libraries
 	require(XML)
@@ -151,7 +151,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				theseSlots<-match(chunks[[i]],url)	# match these URLs in the primary url vector
 				
 				# Grab source code, follow URL redirects, and include headers
-				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],header=TRUE,useragent=userAgent,followlocation=TRUE)
+				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],header=TRUE,useragent=userAgent,followlocation=TRUE,.encoding=.encoding)
 				
 				# Progress reports, if desired, and a nap
 				if(verbose) {
@@ -183,7 +183,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				theseSlots<-match(chunks[[i]],url)	# match these URLs in the primary url vector
 				
 				# Grab source code and include headers
-				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent,header=TRUE)
+				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent,header=TRUE,.encoding=.encoding)
 				
 				# Progress reports, if desired, and a nap
 				if(verbose) {
@@ -218,7 +218,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				theseSlots<-match(chunks[[i]],url)	# match these URLs in the primary url vector
 				
 				# Grab source code, follow URL redirects, and include headers
-				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent,followlocation=TRUE,header=TRUE)
+				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent,followlocation=TRUE,header=TRUE,.encoding=.encoding)
 				
 				# Progress reports, if desired, and a nap
 				if(verbose) {
@@ -250,7 +250,7 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 				theseSlots<-match(chunks[[i]],url)	# match these URLs in the primary url vector
 				
 				# Grab source code
-				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent)
+				sourceCode[theseSlots]<-getURLAsynchronous(chunks[[i]],useragent=userAgent,.encoding=.encoding)
 				
 				# Progress reports, if desired, and a nap
 				if(verbose) {
