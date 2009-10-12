@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<recipe from="Debra A." year="1990">
+	<ingredient type="wet">
+		<amount>1</amount>
+		<unit>stick</unit>
+		<item>butter</item>
+	</ingredient>
+	<ingredient type="wet">
+		<amount>0.5</amount>
+		<unit>cup</unit>
+		<item>peanut butter</item>
+	</ingredient>
+	<ingredient type="dry">
+		<amount>0.5</amount>
+		<unit>cup</unit>
+		<item>granulated sugar</item>
+	</ingredient>
+	<ingredient type="dry">
+		<amount>0.5</amount>
+		<unit>cup</unit>
+		<item>packed brown sugar</item>
+	</ingredient>
+	<ingredient type="wet">
+		<amount>1</amount>
+		<unit></unit>
+		<item>large egg</item>
+	</ingredient>
+	<ingredient type="wet">
+		<amount>0.5</amount>
+		<unit>teaspoon</unit>
+		<item>vanilla extract</item>
+	</ingredient>
+	<ingredient type="dry">
+		<amount>1.25</amount>
+		<unit>cup</unit>
+		<item>flour</item>
+	</ingredient>
+	<ingredient type="dry">
+		<amount>0.75</amount>
+		<unit>teaspoon</unit>
+		<item>baking soda</item>
+	</ingredient>
+	<ingredient type="dry">
+		<amount>0.5</amount>
+		<unit>teaspoon</unit>
+		<item>salt</item>
+	</ingredient>
+	<ingredient type="other">
+		<amount>1</amount>
+		<unit>package</unit>
+		<item>miniature peanut butter cups</item>
+	</ingredient>
+	<directions>
+		<step>Heat oven to 375 degrees Fahrenheit.</step>
+		<step>Cream together butter and peanut butter with granulated and brown sugars. Beat in egg and vanilla.  Stir together flour, baking soda and salt and blend into creamed mixture to make a smooth dough.</step>
+		<step>Shape dough into 1 inch balls and place into ungreased miniature muffin pans. Bake for 8 to 10 minutes. Have the peanut butter cups unwrapped and ready. Immediately after taking the pans from the oven, press a peanut butter cup into the center of each cookie until only the top of the candy shows.</step>
+		<step>Cool in pan at least 20 minutes before attempting to remove.</step>
+	</directions>
+	<yield>About 36 cookies</yield>
+</recipe>
