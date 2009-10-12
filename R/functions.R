@@ -33,7 +33,7 @@ headerParse<-function(source) {
 # A function to retrieve urls contained in any "Location" headers
 urlRedirects<-function(headers) {
 	contentLocationHeaders<-sapply(lapply(headers,names),grep,pattern="Content-Location")
-	locationHeaders<-sapply(lapply(headers,names),grep,pattern="Location")
+	locationHeaders<-sapply(lapply(headers,names),grep,pattern="^Location$")
 	if(any(sapply(contentLocationHeaders,length)>0)) {
 		these<-which(sapply(contentLocationHeaders,length)>0)
 		for(i in these) {
@@ -55,7 +55,7 @@ urlRedirects<-function(headers) {
 
 # A function to strip headers from HTML/XML source code
 stripHeaders<-function(source) {
-	startStopPositions<-gregexpr(pattern="(.+\r\n\r\n+)<",source)
+	startStopPositions<-gregexpr(pattern="^(.+?\r\n\r\n+)<",source)
 	start<-unlist(lapply(startStopPositions,attr,which="match.length"))
 	end<-sapply(source,nchar)
 	mapply(substr,x=source,start=start,stop=end)
@@ -325,6 +325,11 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 		}
 	}
 	
+	# If returning something of size 1, just return it
+	if(length(returnThis)==1 && is.list(returnThis)) {
+		returnThis<-returnThis[[1]]		
+	}
+	
 	# If there are headers to work with, then attach them as attributes to the return value
 	if(any(!sapply(hdrs,is.null))) {
 		these<-which(!sapply(hdrs,is.null))
@@ -343,11 +348,6 @@ scrape<-function(url=NULL,object=NULL,file=NULL,chunkSize=50,maxSleep=5,
 		for(i in these) {
 			attr(returnThis[[i]],which="redirect.url")<-redirectURL[[i]]
 		}
-	}
-	
-	# If returning something of size 1, just return it
-	if(length(returnThis)==1 && is.list(returnThis)) {
-		returnThis<-returnThis[[1]]		
 	}
 	
 	returnThis
