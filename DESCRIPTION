@@ -1,15 +1,16 @@
 Package: scrapeR
 Type: Package
-Title: Tools for Scraping Data from HTML and XML Documents
-Version: 0.1.6
-Date: 2009-10-12
-Author: Ryan M. Acton <rmacton@gmail.com>
-Maintainer: Ryan M. Acton <rmacton@gmail.com>
-Depends: XML,RCurl
-Description: Tools for Scraping Data from Web-Based Documents
-License: GPL (>= 2)
-URL: http://www.ryanacton.com
-LazyLoad: yes
-Packaged: 2010-01-25 19:14:23 UTC; ryan
+Title: These Functions Fetch and Extract Text Content from Specified
+        Web Pages
+Version: 0.1.7
+Authors@R: c(person("Mathieu Dubeau", email = "mdubeau20@gmail.com", role = c("aut", "cre", "cph")))
+Description: The 'scrapeR' package utilizes functions that fetch and extract text content from specified web pages. It handles HTTP errors and parses HTML efficiently. The package can handle hundreds of websites at a time using the scrapeR_in_batches() command.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Imports: httr, rvest, utils, magrittr
+NeedsCompilation: no
+Packaged: 2023-11-22 14:46:17 UTC; mathieu.dubeau
+Author: Mathieu Dubeau [aut, cre, cph]
+Maintainer: Mathieu Dubeau <mdubeau20@gmail.com>
 Repository: CRAN
-Date/Publication: 2010-02-03 10:09:28
+Date/Publication: 2023-11-23 16:00:02 UTC

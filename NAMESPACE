@@ -1,1 +1,10 @@
-exportPattern("scrape")
+exportPattern("^[[:alpha:]]+")
+importFrom(httr, GET)
+importFrom(httr, timeout)
+importFrom(httr, http_error)
+importFrom(rvest, read_html)
+importFrom(rvest, html_nodes)
+importFrom(rvest, html_text)
+importFrom(magrittr, `%>%`)
+importFrom(utils, write.table)
+
