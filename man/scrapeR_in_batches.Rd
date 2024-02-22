@@ -4,10 +4,10 @@
   Batch Web Page Content Scraper
 }
 \description{
-  The \code{scrapeR_in_batches} function processes a dataframe in batches, scraping web content from URLs in a specified column and writing the scraped content to an output file.
+  The \code{scrapeR_in_batches} function processes a dataframe in batches, scraping web content from URLs in a specified column and writing the scraped content to a column in df.
 }
 \usage{
-scrapeR_in_batches(df, url_column, output_file)
+scrapeR_in_batches(df, url_column, extract_contacts)
 }
 \arguments{
   \item{df}{
@@ -16,15 +16,16 @@ scrapeR_in_batches(df, url_column, output_file)
   \item{url_column}{
     The name of the column in \code{df} that contains the URLs.
   }
-  \item{output_file}{
-    The path to the output file where the scraped content will be saved.
+  \item{extract_contacts}{
+    A function that searches scraped content for emails and phone numbers, defaults to FALSE.
   }
+
 }
 \details{
-  This function divides the input dataframe into batches of a fixed size (default: 100). For each batch, it extracts the combined text content from the web pages of the URLs in the specified column. The results are appended to the output file. The function also includes a throttling mechanism to pause between batch processing, reducing the load on the server being scraped.
+  This function divides the input dataframe into batches of a fixed size (default: 100). For each batch, it extracts the combined text content from the web pages of the URLs in the specified column. The results are appended to the df. The function also includes a throttling mechanism to pause between batch processing, reducing the load on the server being scraped.
 }
 \value{
-  There is no return value, as the functions output is directly written to the specified file.
+  The values are returned to content column and optionally to an email and phone_number column if extract_contacts is TRUE.
 }
 \references{
   Refer to \href{https://www.rdocumentation.org/packages/rvest}{rvest package documentation} and \href{https://www.rdocumentation.org/packages/httr}{httr package documentation} for underlying web scraping methods.
@@ -33,7 +34,7 @@ scrapeR_in_batches(df, url_column, output_file)
   Mathieu Dubeau Ph.D
 }
 \note{
-  Ensure that the \pkg{httr} and \pkg{rvest} packages are installed and loaded. Also, handle large datasets and output files with care to avoid memory issues.
+  Ensure that the \pkg{httr}, \pkg{rvest}, and \pkg{stringr} packages are installed and loaded. Also, handle large datasets and output files with care to avoid memory issues.
 }
 
 \seealso{
@@ -48,7 +49,7 @@ scrapeR_in_batches(df, url_column, output_file)
   df <- data.frame(url = c("http://site1.com", "http://site2.com"), stringsAsFactors = FALSE)
 
   \dontrun{
-    scrapeR_in_batches(df, url_column = "url", output_file = "mock_output.csv")
+    scrapeR_in_batches(df, url_column = "url", extract_contacts = FALSE)
   }
 }
 \keyword{ batch processing }

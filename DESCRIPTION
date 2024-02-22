@@ -2,15 +2,15 @@ Package: scrapeR
 Type: Package
 Title: These Functions Fetch and Extract Text Content from Specified
         Web Pages
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: c(person("Mathieu Dubeau", email = "mdubeau20@gmail.com", role = c("aut", "cre", "cph")))
 Description: The 'scrapeR' package utilizes functions that fetch and extract text content from specified web pages. It handles HTTP errors and parses HTML efficiently. The package can handle hundreds of websites at a time using the scrapeR_in_batches() command.
 License: MIT + file LICENSE
 Encoding: UTF-8
-Imports: httr, rvest, utils, magrittr
+Imports: httr, rvest, utils, magrittr, stringr
 NeedsCompilation: no
-Packaged: 2023-11-22 14:46:17 UTC; mathieu.dubeau
+Packaged: 2024-02-21 16:39:06 UTC; mathieu.dubeau
 Author: Mathieu Dubeau [aut, cre, cph]
 Maintainer: Mathieu Dubeau <mdubeau20@gmail.com>
 Repository: CRAN
-Date/Publication: 2023-11-23 16:00:02 UTC
+Date/Publication: 2024-02-22 00:40:02 UTC

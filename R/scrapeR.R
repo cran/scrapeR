@@ -34,31 +34,53 @@ scrapeR <- function(url) {
 
 ## loop to batch and extract content
 
-scrapeR_in_batches <- function(df, url_column, output_file) {
+scrapeR_in_batches <- function(df, url_column, extract_contacts = FALSE) {
+  # function for extracting contact info
+  extract_contact_info <- function(combined_text) {
+    email_pattern <- "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+    phone_pattern <- "\\(?[0-9]{3}\\)?[-. ]?[0-9]{3}[-. ]?[0-9]{4}"
+
+    emails <- str_extract_all(combined_text, email_pattern) %>% unlist()
+    phones <- str_extract_all(combined_text, phone_pattern) %>% unlist()
+
+    list(emails = paste(unique(emails), collapse = '; '),
+         phone_numbers = paste(unique(phones), collapse = '; '))
+  }
+
   batch_size <- 100
   num_rows <- nrow(df)
   num_batches <- ceiling(num_rows / batch_size)
+  all_batches <- list()
 
   for (i in 1:num_batches) {
-    message("Processing batch ", i, " of ", num_batches)
-    start_row <- (i - 1) * batch_size + 1
-    end_row <- min(i * batch_size, num_rows)
+    message(sprintf("Processing batch %d of %d", i, num_batches))
+    batch <- df[((i-1)*batch_size + 1):min(i*batch_size, num_rows), , drop = FALSE]
 
-    batch <- df[start_row:end_row, ]
     batch$content <- sapply(batch[[url_column]], scrapeR, USE.NAMES = FALSE)
 
-    write.table(batch, file = output_file, sep = ",", row.names = FALSE,
-                col.names = i == 1, append = i != 1)
+    if (extract_contacts) {
+      # Directly call extract_contact_info here on the combined_text
+      contact_info <- lapply(batch$content, function(combined_text) {
+        if (!is.na(combined_text)) {
+          return(extract_contact_info(combined_text))
+        } else {
+          return(list(emails = NA, phone_numbers = NA))
+        }
+      })
 
-    # Clear memory
-    rm(batch)
+      # Extract emails and phone numbers and add them to the batch dataframe
+      batch$emails <- sapply(contact_info, function(info) info$emails)
+      batch$phone_numbers <- sapply(contact_info, function(info) info$phone_numbers)
+    }
+
+    all_batches[[i]] <- batch
+
     gc()
-
-    # Throttle requests
     Sys.sleep(1)
   }
+
+  result_df <- do.call(rbind, all_batches)
   message("Processing complete.")
+  return(result_df)
 }
-
-
 

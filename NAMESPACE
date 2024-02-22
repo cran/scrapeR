@@ -7,4 +7,5 @@ importFrom(rvest, html_nodes)
 importFrom(rvest, html_text)
 importFrom(magrittr, `%>%`)
 importFrom(utils, write.table)
+importFrom(stringr, str_extract_all)
 
